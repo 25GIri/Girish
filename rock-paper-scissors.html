@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors Game</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #74b9ff, #a29bfe);
+            color: #2d3436;
+            text-align: center;
+            margin: 0;
+            padding: 50px;
+        }
+        .container {
+            max-width: 450px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #0984e3;
+            margin-bottom: 20px;
+        }
+        .choices {
+            display: flex;
+            justify-content: space-around;
+            margin: 30px 0;
+        }
+        button {
+            background-color: #0984e3;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+        button:hover {
+            background-color: #74b9ff;
+            transform: scale(1.05);
+        }
+        .scoreboard {
+            display: flex;
+            justify-content: space-around;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 25px;
+            color: #636e72;
+        }
+        #result {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 20px;
+            min-height: 30px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Rock Paper Scissors</h1>
+        
+        <div class="scoreboard">
+            <div>Player: <span id="player-score">0</span></div>
+            <div>Computer: <span id="computer-score">0</span></div>
+        </div>
+
+        <div class="choices">
+            <button onclick="play('rock')">✊ Rock</button>
+            <button onclick="play('paper')">✋ Paper</button>
+            <button onclick="play('scissors')">✌️ Scissors</button>
+        </div>
+
+        <div id="result">Choose your weapon!</div>
+    </div>
+
+    <script>
+        let playerScore = 0;
+        let computerScore = 0;
+
+        function play(playerChoice) {
+            const choices = ['rock', 'paper', 'scissors'];
+            const computerChoice = choices[Math.floor(Math.random() * 3)];
+            
+            let emojiMap = {
+                'rock': '✊ Rock',
+                'paper': '✋ Paper',
+                'scissors': '✌️ Scissors'
+            };
+
+            let resultMessage = '';
+
+            if (playerChoice === computerChoice) {
+                resultMessage = `It's a tie! Both chose ${emojiMap[playerChoice]}.`;
+                document.getElementById('result').style.color = '#fdcb6e';
+            } else if (
+                (playerChoice === 'rock' && computerChoice === 'scissors') ||
+                (playerChoice === 'paper' && computerChoice === 'rock') ||
+                (playerChoice === 'scissors' && computerChoice === 'paper')
+            ) {
+                playerScore++;
+                document.getElementById('player-score').textContent = playerScore;
+                resultMessage = `You Win! ${emojiMap[playerChoice]} beats ${emojiMap[computerChoice]}.`;
+                document.getElementById('result').style.color = '#00b894';
+            } else {
+                computerScore++;
+                document.getElementById('computer-score').textContent = computerScore;
+                resultMessage = `You Lose! ${emojiMap[computerChoice]} beats ${emojiMap[playerChoice]}.`;
+                document.getElementById('result').style.color = '#d63031';
+            }
+
+            document.getElementById('result').textContent = resultMessage;
+        }
+    </script>
+</body>
+</html>
